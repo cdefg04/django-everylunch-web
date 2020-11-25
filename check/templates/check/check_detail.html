@@ -1,0 +1,23 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+<div class="detailbox" style="width: 50%; margin: 0 auto; padding-top: 250px;">
+<h2 class="border-bottom py-2">{{ check.time }}</h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line; font-weight: bolder;">{{ check.cafeteria }}</div>
+            <br>
+            <div class="card-text" style="white-space: pre-line;">{{ check.menu }}</div>
+{#            <div class="d-flex justify-content-end">#}
+{#                <div class="badge badge-light p-2">#}
+{#                    {{ notice.writer }}#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+    </div>
+    <a class="btn btn-light" href="{% url 'check:modify' check.pk %}">수정</a>
+    <a class="btn btn-light" href="{% url 'check:delete' check.pk %}">삭제</a>
+    <a class="btn btn-primary" href="{% url 'check:list' %}">돌아가기</a>
+</div>
+{% endblock %}

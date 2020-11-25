@@ -1,0 +1,81 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% load list_filter %}
+
+{% block content %}
+    <h2 style=" vertical-align: middle; text-align: center; padding-top: 200px;
+                border-style: none; font-weight: bold; color: #2545fe">공지사항</h2>
+    <div class="container my-3" style="width: 80%; margin: 0 auto; ">
+        <div class="row justify-content-between my-3">
+            <div class="col-2">
+                <button class="btn btn-primary" onclick="location.href='/notice/write/'" style="float: left;">글쓰기</button>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr class="text-center thead-light">
+                <th>번호</th>
+                <th style="width: 50%">제목</th>
+                <th>작성자</th>
+                <th>등록일</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for notice in notices %}
+            <tr class="text-center">
+                <td>{{ notices.paginator.count|sub:notices.start_index|sub:forloop.counter0|add:1 }}</td>
+                <td class="text-left">
+                    <a href="{% url 'notice:detail' notice.pk %}" style="color: black; text-decoration: none;">
+                        {{ notice.title }}
+                    </a>
+                </td>
+                <td>{{ notice.writer }}</td>
+                <td>{{ notice.created_at|date:'Y. m. d'}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- 페이징처리 시작 -->
+        <ul class="pagination justify-content-center">
+            <!-- 이전페이지 -->
+            {% if notices.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ notices.previous_page_number }}">이전</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+            </li>
+            {% endif %}
+            <!-- 페이지리스트 -->
+            {% for page_number in notices.paginator.page_range %}
+            {% if page_number >= notices.number|add:-5 and page_number <= notices.number|add:5 %}
+                {% if page_number == notices.number %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+                {% endif %}
+            {% endif %}
+            {% endfor %}
+            <!-- 다음페이지 -->
+            {% if notice_list.has_next %}
+            <li class="page-item">
+                <a class="page-link"  href="?page={{ notices.next_page_number }}">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+        <!-- 페이징처리 끝 -->
+    </div>
+{% endblock %}
+

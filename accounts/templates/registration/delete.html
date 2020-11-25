@@ -1,0 +1,10 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block content %}
+    <form method="POST" style=" padding-top: 100px; text-align: center;">
+        {% csrf_token %}
+        <p>정말로 탈퇴하시겠습니까?</p>
+        <input type="submit" class="btn btn-danger" value="탈퇴하기"/>
+    </form>
+{% endblock %}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>EVERYLUNCH</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+        <div id="header" role="banner">
+            <div class="logo">
+                <a href="/"><img src="{% static 'images/logo_web.png' %}"></a>
+            </div>
+
+            <div class="menu" style="float: left;">
+                <ul>
+                    <li><a href="{% url 'chart:list' %}">매출 확인</a></li>
+                    <li><a href="{% url 'evaluate:list' %}">학생 의견 및 평가</a></li>
+                    <li><a href="{% url 'notice:list' %}">공지사항</a></li>
+                    <li><a href="{% url 'check:list' %}">식단 등록</a></li>
+                </ul>
+            </div>
+
+            <div class="menu" style="float: right; padding-right: 5px;">
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'accounts:update' %}">{{ user.get_username }} 님</a></li>
+                        <li><a href="{% url 'accounts:logout' %}">로그아웃</a></li>
+                    {% else %}
+                        <li><a href="{% url 'accounts:login' %}">로그인</a></li>
+                        <li><a href="{% url 'accounts:join' %}">회원가입</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+    <div id="main" role="main">
+    {% block content %}
+    {% endblock %}
+    </div>
+
+    <footer id="footer" role="contentinfo">
+        <div style="right: 0;
+                text-align: center;
+                margin: 0;
+                left: 0px;
+                bottom: 0px;
+                width: 100%;
+                font-color: #d2d2d2;
+                font-size: 11px;
+                padding-bottom: 10px;
+                padding-top: 50px; position: absolute;">
+            Copyright&copy; Hanyang Women's University SmartIT<br>EVERYLUNCH
+        </div>
+    </footer>
+</body>
+</html>
