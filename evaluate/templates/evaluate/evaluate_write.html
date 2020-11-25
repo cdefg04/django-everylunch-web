@@ -1,0 +1,19 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block content %}
+{#<h2 style="margin-bottom: 1.5rem!important; vertical-align: middle; text-align: center; padding-top: 100px;#}
+{#    border-style: none; font-weight: bold; color: #2545fe">글 작성</h2>#}
+    <div style="padding-top: 150px;">
+    <div class="container my-3">
+        <div class="col-12" style="width: 60%; margin: 0 auto;">
+            <form class="post-form my-3" method="post"
+              enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">등록하기</button>
+            </form>
+      </div>
+    </div>
+    </div>
+{% endblock %}

@@ -3,6 +3,7 @@ from django.core.mail import message
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 
+from evaluate.forms import EvaluateForm
 from evaluate.models import Evaluate
 
 
@@ -24,6 +25,26 @@ def list(request):
 
 
 @login_required
+def write(request):
+    if request.method == "POST":
+        form = EvaluateForm(request.POST)
+
+        if form.is_valid():
+            evaluate = form.save(commit=False)
+            evaluate.time = form.cleaned_data['time']
+            evaluate.cafeteria = form.cleaned_data['cafeteria']
+            evaluate.menu = form.cleaned_data['menu']
+            evaluate.contents = form.cleaned_data['contents']
+            evaluate.save()
+            return redirect('/evaluate/list/')
+
+    else:
+        form = EvaluateForm()
+
+    return render(request, 'evaluate/evaluate_write.html', {'form': form})
+
+
+@login_required
 def detail(request, pk):
     evaluate = Evaluate.objects.get(pk=pk)
     # pk 에 해당하는 글을 가지고 올 수 있게 된다.
@@ -34,10 +55,6 @@ def detail(request, pk):
 @login_required
 def delete(request, pk):
     evaluate = Evaluate.objects.get(pk=pk)
-
-    if request.user != evaluate.writer:
-        message.error(request, '삭제권한이 없습니다.')
-        return redirect('evaluate:detail', pk=pk)
 
     evaluate.delete()
     return redirect('evaluate:list')

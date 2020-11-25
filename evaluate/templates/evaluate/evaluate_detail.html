@@ -3,15 +3,14 @@
 
 {% block content %}
 <div class="detailbox" style="width: 60%; margin: 0 auto; padding-top: 100px;">
-<h2 class="border-bottom py-2">{{ evaluate.title }}</h2>
+<h2 class="border-bottom py-2">{{ evaluate.cafeteria }}</h2>
     <div class="card my-3">
         <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">{{ evaluate.time }}</div>
+            <br>
+            <div class="card-text" style="white-space: pre-line; font-weight: bolder;">{{ evaluate.menu }}</div>
+            <br><br>
             <div class="card-text" style="white-space: pre-line;">{{ evaluate.contents }}</div>
-            <div class="d-flex justify-content-end">
-                <div class="badge badge-light p-2">
-                    {{ evaluate.writer }}
-                </div>
-            </div>
         </div>
     </div>
     <a class="btn btn-light" href="{% url 'evaluate:delete' evaluate.pk %}">삭제</a>

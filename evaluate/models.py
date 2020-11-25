@@ -1,16 +1,20 @@
 from django.db import models
+from django.urls import reverse
 
 from accounts.models import myuser
 
 
 class Evaluate(models.Model):
-    title = models.CharField(max_length=200, verbose_name="제목")
+    time = models.CharField(max_length=50, verbose_name="날짜")
+    cafeteria = models.CharField(max_length=50, verbose_name="식당")
+    menu = models.CharField(max_length=50, verbose_name="메뉴")
     contents = models.TextField(verbose_name="내용")
-    writer = models.ForeignKey(myuser, on_delete=models.CASCADE, verbose_name="작성자")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="등록일")
 
     def __str__(self):
-        return self.title
+        return self.cafeteria
+
+    def get_absolute_url(self):
+        return reverse('evaluate_detail', args=[str(self.id)])
 
     class Meta:
         db_table = 'evaluate'
