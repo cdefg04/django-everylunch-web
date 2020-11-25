@@ -26,7 +26,8 @@ SECRET_KEY = '2((jy3tju!(@hr-9$wm8gio&qrzfw&ad392l7vgv9xy3yc!&!0'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    ".ap-northeast-2.compute.amazonaws.com"
+    ".ap-northeast-2.compute.amazonaws.com",
+    ".everylunch.kr",
 ]
 
 
